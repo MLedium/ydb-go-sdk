@@ -1473,8 +1473,8 @@ func (v *listValue) castTo(dst any) error {
 		for i, item := range v.ListItems() {
 			if err := item.castTo(inner.Index(i).Addr().Interface()); err != nil {
 				return xerrors.WithStackTrace(fmt.Errorf(
-					"%w '%s(%+v)' to '%T' destination",
-					ErrCannotCast, v.Type().Yql(), v, dstValue,
+					"%w '%s(%+v)' to '%T' destination: %w",
+					ErrCannotCast, v.Type().Yql(), v, dstValue, err,
 				))
 			}
 		}
@@ -1604,8 +1604,8 @@ func (v *setValue) castTo(dst any) error {
 		for i, item := range v.items {
 			if err := item.castTo(inner.Index(i).Addr().Interface()); err != nil {
 				return xerrors.WithStackTrace(fmt.Errorf(
-					"%w '%s(%+v)' to '%T' destination",
-					ErrCannotCast, v.Type().Yql(), v, dstValue,
+					"%w '%s(%+v)' to '%T' destination: %w",
+					ErrCannotCast, v.Type().Yql(), v, dstValue, err,
 				))
 			}
 		}
